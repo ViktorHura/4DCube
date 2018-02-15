@@ -1,0 +1,611 @@
+<html>
+
+<head>
+  <title>3D -> 2D</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+
+
+
+    .noselect {
+      -webkit-touch-callout: none;
+      /* iOS Safari */
+      -webkit-user-select: none;
+      /* Safari */
+      -khtml-user-select: none;
+      /* Konqueror HTML */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* Internet Explorer/Edge */
+      user-select: none;
+      /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js"></script>
+
+
+</head>
+
+<body>
+
+
+  <canvas id="2Dc" style="display:none;">
+  </canvas>
+
+
+
+  <div class='noselect' onclick='moveZ(10)' style='position:absolute;width:5%;height:5%;left:95%;top:95%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>→</p>
+  </div>
+
+  <div class='noselect' onclick='moveZ(-10)' style='position:absolute;width:5%;height:5%;left:89%;top:95%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>←</p>
+  </div>
+
+  <p style='position:absolute;left:87%;top:93%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>Z</p>
+
+  <div class='noselect' onclick='moveY(10)' style='position:absolute;width:5%;height:5%;left:95%;top:89%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>→</p>
+  </div>
+
+  <div class='noselect' onclick='moveY(-10)' style='position:absolute;width:5%;height:5%;left:89%;top:89%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>←</p>
+  </div>
+
+  <p style='position:absolute;left:87%;top:87%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>Y</p>
+
+  <div class='noselect' onclick='moveX(10)' style='position:absolute;width:5%;height:5%;left:95%;top:83%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>→</p>
+  </div>
+
+  <div class='noselect' onclick='moveX(-10)' style='position:absolute;width:5%;height:5%;left:89%;top:83%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>←</p>
+  </div>
+
+  <p style='position:absolute;left:87%;top:81%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>X</p>
+
+
+
+
+
+
+
+
+
+  <div class='noselect' onclick='rotateYZ(15)' style='position:absolute;width:5%;height:5%;left:95%;top:75%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↻</p>
+  </div>
+
+  <div class='noselect' onclick='rotateYZ(-15)' style='position:absolute;width:5%;height:5%;left:89%;top:75%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↺</p>
+  </div>
+
+  <p style='position:absolute;left:86%;top:73%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>YZ</p>
+
+  <div class='noselect' onclick='rotateXZ(15)' style='position:absolute;width:5%;height:5%;left:95%;top:69%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↻</p>
+  </div>
+
+  <div class='noselect' onclick='rotateXZ(-15)' style='position:absolute;width:5%;height:5%;left:89%;top:69%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↺</p>
+  </div>
+
+  <p style='position:absolute;left:86%;top:67%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>XZ</p>
+
+  <div class='noselect' onclick='rotateXY(15)' style='position:absolute;width:5%;height:5%;left:95%;top:63%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↻</p>
+  </div>
+
+  <div class='noselect' onclick='rotateXY(-15)' style='position:absolute;width:5%;height:5%;left:89%;top:63%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>↺</p>
+  </div>
+
+  <p style='position:absolute;left:86%;top:61%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>XY</p>
+
+
+
+  <div class='noselect' onclick='reset()' style='position:absolute;width:10%;height:5%;left:90%;top:0%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>Reset</p>
+  </div>
+
+  <div class='noselect' onclick='toggle2D()' style='position:absolute;width:10%;height:5%;left:79%;top:0%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>2D</p>
+  </div>
+
+  <div class='noselect' onclick='window.open("https://viktorhura.github.io/","_self")' style='position:absolute;width:9%;height:5%;left:0%;top:0%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>Back</p>
+  </div>
+  <div class='noselect' onclick='window.open("4D.html","_self")' style='position:absolute;width:9%;height:5%;left:10%;top:0%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
+    <p style='position:absolute;left:30%;top:-50%;'>4D</p>
+  </div>
+
+
+
+
+
+
+  <script>
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color('skyblue');
+
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    var projectscale = 0.3;
+
+
+    camera.position.z = 80;
+    camera.position.x = 15;
+    camera.position.y = 30;
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    window.addEventListener('resize', onWindowResize, false);
+
+    function onWindowResize() {
+
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////MATH////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+
+    var pointarray = [{
+        'x': -25, ////0
+        'y': 25,
+        'z': 25
+      }, {
+        'x': 25, ////1
+        'y': 25,
+        'z': 25
+      },
+      {
+        'x': -25, ////2
+        'y': -25,
+        'z': 25
+      }, {
+        'x': 25, ////3
+        'y': -25,
+        'z': 25
+      },
+      {
+        'x': -25, ////4
+        'y': 25,
+        'z': -25
+      }, {
+        'x': 25, ////5
+        'y': 25,
+        'z': -25
+      },
+      {
+        'x': -25, ////6
+        'y': -25,
+        'z': -25
+      }, {
+        'x': 25, ////7
+        'y': -25,
+        'z': -25
+      }
+    ];
+
+
+    var ribarray = [{
+      'a': 0,
+      'b': 1
+    }, {
+      'a': 2,
+      'b': 3
+    }, {
+      'a': 0,
+      'b': 2
+    }, {
+      'a': 1,
+      'b': 3
+    }, {
+      'a': 4,
+      'b': 5
+    }, {
+      'a': 6,
+      'b': 7
+    }, {
+      'a': 4,
+      'b': 6
+    }, {
+      'a': 5,
+      'b': 7
+    }, {
+      'a': 0,
+      'b': 4
+    }, {
+      'a': 1,
+      'b': 5
+    }, {
+      'a': 2,
+      'b': 6
+    }, {
+      'a': 3,
+      'b': 7
+    }];
+
+    var origin = {
+      'x': 0,
+      'y': 0,
+      'z': 0
+    };
+
+
+    ///Move
+
+    function moveX(amount) {
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+        point.x = point.x + amount;
+
+
+      }
+
+      origin.x = origin.x + amount;
+
+    }
+
+    function moveY(amount) {
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+        point.y = point.y + amount;
+
+
+      }
+
+      origin.y = origin.y + amount;
+
+    }
+
+    function moveZ(amount) {
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+        point.z = point.z + amount;
+
+
+      }
+
+      origin.z = origin.z + amount;
+
+    }
+
+
+    ///Rotation
+
+
+
+
+    function rotateXY(degrees) {
+      var angle = degrees * Math.PI / 180;
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+
+        var new_x_point = Math.cos(angle) * (point.x - origin.x) - Math.sin(angle) * (point.y - origin.y) + origin.x;
+        var new_y_point = Math.sin(angle) * (point.x - origin.x) + Math.cos(angle) * (point.y - origin.y) + origin.y;
+
+        point.x = new_x_point;
+        point.y = new_y_point;
+      }
+
+
+    }
+
+    function rotateXZ(degrees) {
+      var angle = degrees * Math.PI / 180;
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+
+        var new_x_point = Math.cos(angle) * (point.x - origin.x) - Math.sin(angle) * (point.z - origin.z) + origin.x;
+        var new_z_point = Math.sin(angle) * (point.x - origin.x) + Math.cos(angle) * (point.z - origin.z) + origin.z;
+
+        point.x = new_x_point;
+        point.z = new_z_point;
+      }
+
+
+    }
+
+    function rotateYZ(degrees) {
+      var angle = degrees * Math.PI / 180;
+
+      for (i = 0; i < pointarray.length; i++) {
+        var point = pointarray[i];
+
+        var new_y_point = Math.cos(angle) * (point.y - origin.y) - Math.sin(angle) * (point.z - origin.z) + origin.y;
+        var new_z_point = Math.sin(angle) * (point.y - origin.y) + Math.cos(angle) * (point.z - origin.z) + origin.z;
+
+        point.y = new_y_point;
+        point.z = new_z_point;
+      }
+
+
+    }
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////VISUAL HELP////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    var spheres = [];
+    var lines = [];
+
+    for (i = 0; i < pointarray.length; i++) {
+
+      var geometry = new THREE.SphereGeometry(1, 16, 16);
+      var material = new THREE.MeshBasicMaterial({
+        color: 0xffff00
+      });
+      var sphere = new THREE.Mesh(geometry, material);
+      scene.add(sphere);
+      spheres.push(sphere);
+
+    }
+
+    for (i = 0; i < ribarray.length; i++) {
+
+      var material = new THREE.LineBasicMaterial({
+        color: 0x0000ff
+      });
+      var geometry = new THREE.Geometry();
+      geometry.vertices.push(new THREE.Vector3(pointarray[ribarray[i].a].x, pointarray[ribarray[i].a].y, pointarray[ribarray[i].a].z));
+      geometry.vertices.push(new THREE.Vector3(pointarray[ribarray[i].b].x, pointarray[ribarray[i].b].y, pointarray[ribarray[i].b].z));
+      var line = new THREE.Line(geometry, material);
+      scene.add(line);
+      lines.push(line);
+
+
+    }
+
+
+    var originalpoints = JSON.stringify(pointarray.slice());
+
+
+
+
+    function reset() {
+
+      pointarray = [];
+
+      pointarray = JSON.parse(originalpoints);
+      origin.x = 0;
+      origin.y = 0;
+      origin.z = 0;
+
+    }
+
+
+
+
+
+
+
+
+    var animate = function() {
+      requestAnimationFrame(animate);
+
+      for (i = 0; i < spheres.length; i++) {
+
+        spheres[i].position.x = pointarray[i].x;
+        spheres[i].position.y = pointarray[i].y;
+        spheres[i].position.z = pointarray[i].z;
+
+      }
+
+      for (i = 0; i < lines.length; i++) {
+
+
+        lines[i].geometry.vertices = [];
+
+        lines[i].geometry.vertices.push(new THREE.Vector3(pointarray[ribarray[i].a].x, pointarray[ribarray[i].a].y, pointarray[ribarray[i].a].z));
+        lines[i].geometry.vertices.push(new THREE.Vector3(pointarray[ribarray[i].b].x, pointarray[ribarray[i].b].y, pointarray[ribarray[i].b].z));
+        lines[i].geometry.verticesNeedUpdate = true;
+
+
+      }
+
+
+      renderer.render(scene, camera);
+
+
+
+
+    };
+
+
+
+    animate();
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////2D things//////////////////////////////////////////
+    var scale = 200;
+
+    function toggle2D() {
+
+      if (document.getElementById('2Dc').style.display == 'none') {
+        document.getElementById('2Dc').style.display = 'block';
+      } else {
+        document.getElementById('2Dc').style.display = 'none';
+      }
+
+
+    }
+
+    var twodpointarray = [{
+        'x': 0, ////0
+        'y': 0
+
+      }, {
+        'x': 0, ////1
+        'y': 0
+
+      },
+      {
+        'x': 0, ////2
+        'y': 0
+
+      }, {
+        'x': 0, ////3
+        'y': 0
+
+      },
+      {
+        'x': 0, ////4
+        'y': 0
+
+      }, {
+        'x': 0, ////5
+        'y': 0
+
+      },
+      {
+        'x': 0, ////6
+        'y': 0
+
+      }, {
+        'x': 0, ////7
+        'y': 0
+
+      }
+    ];
+
+    var twodribarray = [{
+      'a': 0,
+      'b': 1
+    }, {
+      'a': 2,
+      'b': 3
+    }, {
+      'a': 0,
+      'b': 2
+    }, {
+      'a': 1,
+      'b': 3
+    }, {
+      'a': 4,
+      'b': 5
+    }, {
+      'a': 6,
+      'b': 7
+    }, {
+      'a': 4,
+      'b': 6
+    }, {
+      'a': 5,
+      'b': 7
+    }, {
+      'a': 0,
+      'b': 4
+    }, {
+      'a': 1,
+      'b': 5
+    }, {
+      'a': 2,
+      'b': 6
+    }, {
+      'a': 3,
+      'b': 7
+    }];
+
+
+    function project3Dto2D() {
+
+      for (i = 0; i < pointarray.length; i++) {
+        twodpointarray[i].x = pointarray[i].x + projectscale * pointarray[i].z;
+        twodpointarray[i].y = pointarray[i].y + projectscale * pointarray[i].z;
+      }
+
+
+    }
+
+
+
+
+
+    var animate2D = function() {
+      requestAnimationFrame(animate2D);
+      project3Dto2D();
+      ////Drawing
+
+      document.getElementById("2Dc").width = window.innerWidth;
+      document.getElementById("2Dc").height = window.innerHeight;
+
+      var u = window.innerHeight / scale;
+
+
+      var c = document.getElementById("2Dc");
+      var ctx = c.getContext("2d");
+
+
+      for (i = 0; i < twodpointarray.length; i++) { ////points
+
+        var point = twodpointarray[i];
+
+        ctx.beginPath();
+        ctx.arc(window.innerWidth / 2 + point.x * u, window.innerHeight / 2 + point.y * u, scale / 20, 0, 2 * Math.PI);
+        ctx.stroke();
+
+
+
+      }
+
+      for (i = 0; i < twodribarray.length; i++) { //////lines
+
+
+        var point1x = twodpointarray[twodribarray[i].a].x;
+        var point1y = twodpointarray[twodribarray[i].a].y;
+
+        var point2x = twodpointarray[twodribarray[i].b].x;
+        var point2y = twodpointarray[twodribarray[i].b].y;
+
+        ctx.moveTo(window.innerWidth / 2 + point1x * u, window.innerHeight / 2 + point1y * u);
+        ctx.lineTo(window.innerWidth / 2 + point2x * u, window.innerHeight / 2 + point2y * u);
+        ctx.stroke();
+
+
+      }
+
+
+
+
+    };
+
+    animate2D();
+  </script>
+
+
+
+
+</body>
+
+</html>
