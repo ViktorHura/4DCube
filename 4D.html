@@ -29,6 +29,7 @@
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js"></script>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 
 </head>
@@ -134,7 +135,7 @@
     <p style='position:absolute;left:30%;top:-50%;'>↺</p>
   </div>
 
-  <p style='position:absolute;left:17%;top:67%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>WZ</p>
+  <p style='position:absolute;left:17%;top:67%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>WX</p>
 
   <div class='noselect' onclick='rotateWY(15)' style='position:absolute;width:5%;height:5%;left:11%;top:75%;background-color:white;font-size: 3vh;color:black;font-family: montserrat,sans-serif;overflow:hidden;text-align:center;cursor:pointer;'>
     <p style='position:absolute;left:30%;top:-50%;'>↻</p>
@@ -154,7 +155,7 @@
     <p style='position:absolute;left:30%;top:-50%;'>↺</p>
   </div>
 
-  <p style='position:absolute;left:17%;top:79%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;'>WX</p>
+  <p class='noselect' onclick='rotateWXL()' style='position:absolute;left:17%;top:79%;font-size: 3vh;color:black;font-family: montserrat,sans-serif;cursor:pointer;'><u>WZ</p>
 
 
 
@@ -732,10 +733,15 @@
       camera.position.y = 30;
       camera.lookAt(new THREE.Vector3(0, 0, 0));
 
+      rotall = false;
+      rotcam = false;
+      rotwx = false;
+
     }
 
     var rotall = false;
     var rotcam = false;
+    var rotwx = false;
 
     function rotateall() {
 
@@ -756,6 +762,18 @@
       }
 
     }
+
+    function rotateWXL() {
+
+      if (rotwx == false) {
+        rotwx = true;
+      } else {
+        rotwx = false;
+      }
+
+    }
+
+
 
 
     window.addEventListener('wheel', function(e) {
@@ -813,6 +831,14 @@
         rotateWX(0.35);
         rotateWY(0.35);
         rotateWZ(0.35);
+
+      }
+
+      if (rotwx == true) {
+
+
+        rotateWZ(0.6);
+
 
       }
 
